@@ -60,11 +60,3 @@ All screenshots are included in the main documentation file showing:
    cat linux-task1_documentation.md
    ```
 
-## ✅ Task Status
-**Status:** Complete  
-**Date:** [Add your completion date]  
-**Submitted:** [Add submission date]
-
----
-
-**Note:** This repository demonstrates practical Linux command-line skills for DevOps fundamentals.
