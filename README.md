@@ -1,34 +1,70 @@
-# Linux Fundamentals Assignment
+# DevOps Internship - Task 1
 
-## Overview
-This repository contains documentation and practice exercises for learning Linux command-line basics, including directory navigation, file operations, permissions, and system monitoring.
+## 📋 What I Did
+✅ Installed Ubuntu Server (WSL/VirtualBox)  
+✅ Practiced Linux navigation, files, permissions  
+✅ System monitoring with top/df/free  
+✅ Documented everything with screenshots  
+✅ Answered interview questions
 
-## Assignment Objectives
-1. Install and configure Ubuntu Linux (WSL/VirtualBox/VMware)
-2. Master directory structure navigation
-3. Practice file and directory operations
-4. Learn file viewing and editing techniques
-5. Understand and modify file permissions
-6. Monitor system resources
+## 📁 Repository Structure
+```
+internship-project/
+├── linux-task1/
+│   ├── linux-task1_documentation.md      # Main documentation with commands & screenshots
+│   └── linux_assignment_documentation.md  # Detailed reference guide
+└── README.md                              # This file
+```
 
-## Contents
-- `linux_assignment_documentation.md` - Complete assignment documentation with commands and outputs
+## 📚 Files
+- **[linux-task1_documentation.md](linux-task1/linux-task1_documentation.md)** - Complete command log with outputs, screenshots, and interview answers
+- **[linux_assignment_documentation.md](linux-task1/linux_assignment_documentation.md)** - Comprehensive Linux fundamentals reference
 
-## Environment
+## 🔑 Key Commands Covered
+- **Navigation:** `pwd`, `ls`, `cd`
+- **File Operations:** `mkdir`, `touch`, `rm`, `rmdir`
+- **File Viewing:** `cat`, `less`
+- **Editing:** `nano`, `vim`
+- **Permissions:** `chmod`, `chown`, `ls -l`
+- **Monitoring:** `top`, `htop`, `df -h`, `free -m`
+
+## 🎯 Learning Outcomes
+1. Understanding Linux directory structure (root vs home)
+2. File permission management (rwx notation)
+3. Safe file/directory operations
+4. System resource monitoring
+5. Command-line proficiency
+
+## 🖥️ Environment
 - **OS:** Ubuntu Linux (WSL)
-- **Tools Used:** bash, nano/vim, top, htop, df, free
+- **Shell:** bash
+- **Tools:** nano, vim, top, htop, df, free
 
-## Key Commands Covered
-- Navigation: `pwd`, `ls`, `cd`
-- File Operations: `mkdir`, `touch`, `rm`, `rmdir`
-- File Viewing: `cat`, `less`
-- Editing: `nano`, `vim`
-- Permissions: `chmod`, `chown`, `ls -l`
-- Monitoring: `top`, `htop`, `df -h`, `free -m`
+## 📸 Screenshots
+All screenshots are included in the main documentation file showing:
+- Terminal commands and outputs
+- File permission changes
+- System monitoring tools (df, free, top)
 
-## How to Use
-1. Clone this repository
-2. Review `linux_assignment_documentation.md` for detailed command examples
-3. Practice commands in your Linux environment
-4. Document your own outputs and observations
+## 🚀 How to Use This Repository
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/YOURUSERNAME/internship-project.git
+   ```
+2. Navigate to linux-task1:
+   ```bash
+   cd internship-project/linux-task1
+   ```
+3. Review documentation:
+   ```bash
+   cat linux-task1_documentation.md
+   ```
 
+## ✅ Task Status
+**Status:** Complete  
+**Date:** [Add your completion date]  
+**Submitted:** [Add submission date]
+
+---
+
+**Note:** This repository demonstrates practical Linux command-line skills for DevOps fundamentals.
