@@ -14,6 +14,8 @@
 ip a
 ```
 
+![IP Configuration](images/image3.png)
+
 **Expected Output Analysis:**
 - **Network Interfaces:** Physical and virtual network interfaces
 - **IPv4 Address:** Local IP assigned to interface
@@ -56,6 +58,8 @@ ping -c 4 google.com
 ss -tuln
 ss -tulpn
 ```
+
+![Port Analysis](images/image5.png)
 
 **Active Connections Found:**
 - **Listening Ports:** Services accepting connections
@@ -262,13 +266,13 @@ The intern now understands the fundamental concepts of network communication and
 ![IP Configuration](images/image2.png)
 
 **Connectivity Testing:**
-![Ping Test Results](images/image3.png)
+![Ping Test Results](images/image4.png)
 
 **Port Analysis:**
 ![Port Analysis](images/image4.png)
 
 **DNS Resolution:**
-![DNS Resolution](images/image5.png)
+![DNS Resolution](images/image6.png)
 
 **Advanced DNS Query:**
 ![Advanced DNS Query](images/image6.png)
