@@ -12,9 +12,7 @@
 ### Command: `ip a` (Linux)
 ```bash
 ip a
-```
 
-![IP Configuration](images/image3.png)
 
 **Expected Output Analysis:**
 - **Network Interfaces:** Physical and virtual network interfaces
@@ -58,8 +56,6 @@ ping -c 4 google.com
 ss -tuln
 ss -tulpn
 ```
-
-![Port Analysis](images/image5.png)
 
 **Active Connections Found:**
 - **Listening Ports:** Services accepting connections
@@ -260,13 +256,14 @@ The intern now understands the fundamental concepts of network communication and
 ## 📸 Screenshots
 ![Network Analysis Overview](images/image.png)
 
-### Individual Command Screenshots:
 
 **IP Configuration:**
 ![IP Configuration](images/image2.png)
 
+
+
 **Connectivity Testing:**
-![Ping Test Results](images/image4.png)
+![Ping Test Results](images/image3.png)
 
 **Port Analysis:**
 ![Port Analysis](images/image4.png)

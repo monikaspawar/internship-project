@@ -1,183 +1,170 @@
-# Networking Commands Reference - Task 3 (Linux)
+# Networking Commands Reference - Task 3
 
-## 🔧 Essential Networking Commands for Linux
+## 🔧 Essential Networking Commands
 
 ### 1. IP Configuration Commands
 
-#### Primary Commands (Always Available)
+#### Windows
+```cmd
+ipconfig                    # Basic IP configuration
+ipconfig /all              # Detailed network configuration
+ipconfig /release          # Release IP address
+ipconfig /renew            # Renew IP address
+ipconfig /flushdns         # Clear DNS cache
+```
+
+#### Linux
 ```bash
 ip a                       # Show all interfaces and IPs
 ip addr show               # Same as above
-hostname -I                # Show system IP addresses
-ip route show              # Show routing table
-```
-
-#### Traditional Commands (May Need Installation)
-```bash
-# Install net-tools if needed:
-sudo apt update
-sudo apt install net-tools
-
 ifconfig                   # Traditional interface configuration
 ifconfig eth0              # Show specific interface
-route -n                   # Show routing table
+hostname -I                # Show system IP addresses
 ```
 
 ---
 
 ### 2. Connectivity Testing
 
-#### Basic Connectivity
+#### Universal Commands
 ```bash
-ping -c 4 8.8.8.8         # Send 4 packets to Google DNS
-ping -c 4 google.com       # Test connectivity + DNS resolution
-ping 127.0.0.1            # Loopback test
-ping -c 1 $(ip route | grep default | awk '{print $3}')  # Test gateway
+ping 8.8.8.8              # Test connectivity to Google DNS
+ping google.com           # Test connectivity + DNS resolution
+ping -c 4 8.8.8.8         # Linux: Send only 4 packets
+ping -t 8.8.8.8           # Windows: Continuous ping
+ping -n 10 8.8.8.8        # Windows: Send 10 packets
 ```
 
 #### Advanced Ping Options
 ```bash
-ping -i 2 google.com       # 2 second intervals
-ping -s 1000 8.8.8.8       # Large packet size (1000 bytes)
-ping -W 5 8.8.8.8          # 5 second timeout
-ping -f google.com         # Flood ping (requires root)
+ping -i 2 google.com       # Linux: 2 second intervals
+ping -s 1000 8.8.8.8       # Linux: Large packet size
+ping -W 5000 8.8.8.8       # Linux: 5 second timeout
 ```
 
 ---
 
 ### 3. Port and Service Analysis
 
-#### Modern Commands (Always Available)
-```bash
-ss -tuln                  # Show TCP/UDP listening ports
-ss -tulpn                 # Include process names
-ss -s                     # Socket statistics summary
-ss -tulpn | grep :22      # Check if SSH (port 22) is running
-```
-
-#### Traditional Commands (May Need Installation)
-```bash
-# Install net-tools if needed:
-sudo apt install net-tools
-
-netstat -tuln             # Traditional port listing
-netstat -tulpn            # With process information
+#### Windows
+```cmd
+netstat -an               # All connections and listening ports
+netstat -b                # Show executable associated with each connection
 netstat -r                # Show routing table
-netstat -s                # Protocol statistics
+netstat -s                # Show statistics by protocol
 ```
 
-#### Service Testing
+#### Linux
 ```bash
-telnet localhost 22       # Test SSH connection
-nc -zv google.com 80      # Test port connectivity
-lsof -i                   # List network connections (if available)
+ss -tuln                  # Modern replacement for netstat
+ss -tulpn                 # Include process names
+netstat -tuln             # Traditional command
+netstat -tulpn            # With process information
+lsof -i                   # List open files/network connections
+```
+
+#### Port-Specific Checks
+```bash
+ss -tulpn | grep :80      # Check if port 80 is open
+netstat -an | findstr :443 # Windows: Check port 443
+telnet localhost 22       # Test if SSH is running
 ```
 
 ---
 
 ### 4. DNS Resolution Commands
 
-#### Basic DNS Lookup (Usually Available)
-```bash
+#### Basic DNS Lookup
+```cmd
 nslookup google.com       # Basic DNS lookup
 nslookup google.com 8.8.8.8  # Use specific DNS server
-host google.com           # Simple DNS lookup
 ```
 
-#### Advanced DNS (Install if Needed)
 ```bash
-# Install dnsutils for dig:
-sudo apt install dnsutils
-
 dig google.com            # Detailed DNS query
 dig @8.8.8.8 google.com   # Use specific DNS server
 dig google.com MX         # Mail exchange records
 dig google.com NS         # Name server records
 dig google.com AAAA       # IPv6 addresses
 dig +short google.com     # Short output format
-```
+``
 
 #### DNS Cache Management
-```bash
-sudo systemd-resolve --flush-caches  # Clear DNS cache (systemd)
-sudo service systemd-resolved restart # Restart DNS service
-cat /etc/resolv.conf      # Show DNS configuration
+```cmd
+ipconfig /displaydns      # Windows: Show DNS cache
+ipconfig /flushdns        # Windows: Clear DNS cache
+sudo systemctl flush-dns  # Linux: Clear DNS cache
 ```
 
 ---
 
 ### 5. Network Path Tracing
 
-#### Install Tracing Tools
-```bash
-# Install traceroute and mtr:
-sudo apt update
-sudo apt install traceroute mtr-tiny
-```
-
 #### Route Tracing
-```bash
-traceroute google.com     # Trace network path
-traceroute -m 15 google.com  # Maximum 15 hops
-mtr google.com            # Continuous trace route
-mtr -c 10 google.com      # 10 cycles then stop
+```cmd
+tracert google.com        # Windows: Trace route to destination
+tracert -h 15 google.com  # Limit to 15 hops
 ```
 
-#### Route Table Management
 ```bash
-ip route show             # Show routing table
-ip route show default     # Show default gateway
-route -n                  # Numeric routing table (if net-tools installed)
-# Add route (requires root):
-# sudo ip route add 192.168.1.0/24 via 192.168.1.1
+traceroute google.com     # Linux: Trace network path
+traceroute -m 20 google.com  # Maximum 20 hops
+mtr google.com            # Linux: Continuous trace route
+```
+
+#### Route Table
+```cmd
+route print               # Windows: Show routing table
+route add 192.168.1.0 mask 255.255.255.0 192.168.1.1  # Add route
+```
+
+```bash
+ip route show             # Linux: Show routing table
+route -n                  # Linux: Numeric routing table
+ip route add 192.168.1.0/24 via 192.168.1.1  # Add route
 ```
 
 ---
 
 ### 6. Network Interface Management
 
-#### View Interfaces
-```bash
-ip link show              # Show all network interfaces
-ip addr show              # Show interfaces with IP addresses
-ls /sys/class/net/        # List network interface names
+#### Windows
+```cmd
+netsh interface show interface                    # List interfaces
+netsh interface set interface "Ethernet" disabled # Disable interface
+netsh interface set interface "Ethernet" enabled  # Enable interface
 ```
 
-#### Interface Control (Requires Root)
+#### Linux
 ```bash
-# Modern commands:
-sudo ip link set enp0s3 up     # Enable interface (replace enp0s3 with your interface)
-sudo ip link set enp0s3 down   # Disable interface
-
-# Traditional commands (if ifconfig available):
-sudo ifconfig enp0s3 up        # Enable interface
-sudo ifconfig enp0s3 down      # Disable interface
+ip link show              # Show all network interfaces
+ip link set eth0 up       # Enable interface
+ip link set eth0 down     # Disable interface
+ifconfig eth0 up          # Traditional enable
+ifconfig eth0 down        # Traditional disable
 ```
 
 ---
 
 ### 7. Network Statistics and Monitoring
 
-#### Built-in Statistics
-```bash
-ss -s                     # Socket statistics summary
-cat /proc/net/dev         # Network interface statistics
-cat /proc/net/route       # Kernel routing table
-cat /proc/net/tcp         # TCP connections
+#### Connection Statistics
+```cmd
+netstat -s                # Protocol statistics
+netstat -e                # Ethernet statistics
 ```
 
-#### Advanced Monitoring (Install if Needed)
 ```bash
-# Install monitoring tools:
-sudo apt install iftop nethogs iperf3
-
+ss -s                     # Socket statistics
+cat /proc/net/dev         # Network interface statistics
 iftop                     # Real-time network usage
 nethogs                   # Network usage by process
+```
+
+#### Bandwidth Testing
+```bash
 iperf3 -s                 # Start iperf server
 iperf3 -c server_ip       # Connect to iperf server
-
-# Install speedtest:
-sudo apt install speedtest-cli
 speedtest-cli             # Internet speed test
 ```
 
@@ -185,139 +172,107 @@ speedtest-cli             # Internet speed test
 
 ### 8. Network Security Commands
 
-#### Port Scanning (Install if Needed)
+#### Port Scanning
 ```bash
-# Install nmap:
-sudo apt install nmap
-
 nmap localhost            # Scan local ports
-nmap -p 22,80,443 google.com # Scan specific ports
-nmap -sS 192.168.1.1      # SYN scan (requires root)
+nmap -p 80,443 google.com # Scan specific ports
+nmap -sS 192.168.1.1      # SYN scan
 ```
 
-#### Firewall Management
+#### Firewall (Linux)
 ```bash
-sudo ufw status           # Ubuntu firewall status
-sudo iptables -L          # List firewall rules
+ufw status                # Ubuntu firewall status
+iptables -L               # List firewall rules
 ss -tulpn | grep LISTEN   # Show listening services
-sudo ufw enable           # Enable firewall
-sudo ufw allow 22         # Allow SSH
 ```
 
 ---
 
 ### 9. Wireless Network Commands
 
-#### NetworkManager (Ubuntu/Debian)
-```bash
-nmcli dev wifi list       # List available WiFi networks
-nmcli dev status          # Show device status
-nmcli connection show     # Show saved connections
-nmcli dev wifi connect "SSID" password "password"  # Connect to WiFi
+#### Windows
+```cmd
+netsh wlan show profiles  # Show saved WiFi networks
+netsh wlan show profile name="WiFiName" key=clear  # Show WiFi password
 ```
 
-#### Traditional Wireless Tools (Install if Needed)
+#### Linux
 ```bash
-# Install wireless tools:
-sudo apt install wireless-tools
-
 iwconfig                  # Wireless interface configuration
 iwlist scan               # Scan for wireless networks
-iwlist wlan0 scan | grep ESSID  # Show WiFi names
+nmcli dev wifi list       # NetworkManager WiFi list
 ```
 
 ---
 
 ### 10. Advanced Network Diagnostics
 
-#### Packet Capture (Install if Needed)
+#### Packet Capture
 ```bash
-# Install tcpdump:
-sudo apt install tcpdump
-
-# Capture packets (requires root):
-sudo tcpdump -i any       # Capture on all interfaces
-sudo tcpdump -i enp0s3 port 80  # Capture HTTP traffic
-sudo tcpdump -c 10 host google.com  # Capture 10 packets to/from Google
-
-# Install Wireshark (GUI):
-sudo apt install wireshark
+tcpdump -i eth0           # Capture packets on interface
+tcpdump -i eth0 port 80   # Capture HTTP traffic
+wireshark                 # GUI packet analyzer
 ```
 
-#### Network Performance Testing
+#### Network Performance
 ```bash
-# Install additional tools:
-sudo apt install netcat-openbsd hping3
-
-ping -f google.com        # Flood ping (requires root)
-nc -zv google.com 80      # Test port connectivity
+ping -f google.com        # Flood ping (Linux)
 hping3 -S -p 80 google.com # Advanced ping tool
+nc -zv google.com 80      # Test port connectivity
 ```
 
 ---
 
-## 🎯 Linux Troubleshooting Workflow
+## 🎯 Common Troubleshooting Workflow
 
-### Step-by-Step Network Diagnosis
-
-1. **Install Required Tools**
+1. **Check IP Configuration**
    ```bash
-   sudo apt update
-   sudo apt install net-tools traceroute dnsutils mtr-tiny
+   ip a                    # Linux
+   ipconfig               # Windows
    ```
 
-2. **Check IP Configuration**
+2. **Test Local Connectivity**
    ```bash
-   ip a                    # Show all interfaces
-   hostname -I             # Show IP addresses
-   ip route show default   # Show gateway
+   ping 127.0.0.1         # Loopback test
+   ping gateway_ip        # Gateway connectivity
    ```
 
-3. **Test Local Connectivity**
+3. **Test Internet Connectivity**
    ```bash
-   ping -c 1 127.0.0.1     # Loopback test
-   ping -c 1 $(ip route | grep default | awk '{print $3}')  # Gateway test
+   ping 8.8.8.8           # Google DNS
+   ping google.com        # DNS + connectivity
    ```
 
-4. **Test Internet Connectivity**
+4. **Check DNS Resolution**
    ```bash
-   ping -c 4 8.8.8.8       # Google DNS
-   ping -c 4 google.com    # DNS + connectivity
+   nslookup google.com    # DNS lookup
+   dig google.com         # Detailed DNS info
    ```
 
-5. **Check DNS Resolution**
+5. **Analyze Network Path**
    ```bash
-   nslookup google.com     # Basic DNS lookup
-   dig google.com          # Detailed DNS info (if installed)
-   cat /etc/resolv.conf    # DNS configuration
+   traceroute google.com  # Route tracing
+   mtr google.com         # Continuous monitoring
    ```
 
-6. **Analyze Network Path**
+6. **Check Services and Ports**
    ```bash
-   traceroute google.com   # Route tracing (if installed)
-   mtr -c 5 google.com     # Continuous monitoring (if installed)
-   ```
-
-7. **Check Services and Ports**
-   ```bash
-   ss -tulpn               # Open ports
-   ss -tulpn | grep :22    # Check SSH
+   ss -tulpn              # Open ports
+   netstat -an            # Active connections
    ```
 
 ---
 
-## 📚 Linux Quick Reference
+## 📚 Quick Reference
 
-| Task | Command | Notes |
+| Task | Windows | Linux |
 |------|---------|-------|
-| Show IP | `ip a` | Always available |
-| Test connectivity | `ping -c 4 8.8.8.8` | Built-in |
-| Show ports | `ss -tuln` | Modern, always available |
-| DNS lookup | `nslookup google.com` | Usually available |
-| Trace route | `traceroute google.com` | Install: `sudo apt install traceroute` |
-| Show interfaces | `ip link show` | Always available |
-| Show gateway | `ip route show default` | Always available |
-| Install tools | `sudo apt install net-tools dnsutils traceroute` | One-time setup |
+| Show IP | `ipconfig` | `ip a` |
+| Test connectivity | `ping` | `ping` |
+| Show ports | `netstat -an` | `ss -tuln` |
+| DNS lookup | `nslookup` | `dig` |
+| Trace route | `tracert` | `traceroute` |
+| Show interfaces | `ipconfig /all` | `ip link show` |
 
 ---
 
@@ -339,26 +294,3 @@ hping3 -S -p 80 google.com # Advanced ping tool
 
 ### Q: What is a port?
 **A:** Logical endpoint for network communication, allowing multiple services on one IP address (HTTP:80, HTTPS:443, SSH:22, FTP:21).
-
----
-
-## 🚀 Getting Started on Linux
-
-1. **First, install essential tools:**
-   ```bash
-   sudo apt update
-   sudo apt install net-tools traceroute dnsutils
-   ```
-
-2. **Start with basic commands:**
-   ```bash
-   ip a                    # Check your IP
-   ping -c 4 8.8.8.8      # Test connectivity
-   ss -tuln                # Check open ports
-   ```
-
-3. **Then try advanced features:**
-   ```bash
-   nslookup google.com     # DNS lookup
-   traceroute google.com   # Trace network path
-   ```
